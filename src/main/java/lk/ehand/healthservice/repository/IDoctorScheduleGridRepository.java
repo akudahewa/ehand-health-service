@@ -31,7 +31,13 @@ public interface IDoctorScheduleGridRepository extends JpaRepository<DoctorSched
 //            "where ds.DOCTOR_DISPENSARY_ID=:id",nativeQuery = true)
 //    Collection<DoctorScheduleGrid> findByDoctorDispensaryid(Long id);
 
-    List<DoctorScheduleGrid> findByDoctorDispensaryId(Long id);
+
+    List<DoctorScheduleGrid>  findByDoctorDispensaryId(Long id);
+
+    @Query(value = "select dsg.* from doctor_schedule_grid dsg inner join "+
+            "doctor_dispensary dd on dsg.doctor_dispensary_id=dd.doctor_dispensary_id "+
+            "where dd.doctor_id=:doctorId and dd.dispensary_id=:dispensaryId ", nativeQuery = true)
+    List<DoctorScheduleGrid> findByDoctorDispensaryId(Long doctorId,Long dispensaryId);
 
     List<DoctorScheduleGrid> findByDoctorDispensaryIdAndDayOfWeek(Long id,String day);
 

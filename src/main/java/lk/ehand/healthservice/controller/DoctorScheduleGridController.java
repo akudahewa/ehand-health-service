@@ -48,6 +48,19 @@ public class DoctorScheduleGridController {
        return new ResponseEntity(doctorScheduleGridRepository.save(doctorScheduleGrid), HttpStatus.CREATED);
     }
 
+//    @GetMapping(value = "/schedule/{doctorDispensaryId}")
+//    public ResponseEntity<DoctorScheduleGrid> saveCity(@RequestBody DoctorScheduleGrid doctorScheduleGrid,
+//                                                       @PathVariable("doctorDispensaryId") String doctorDispensaryId
+//                                                       )
+//    {
+//        log.info("GET - Get all session- doctorId :{} , dispensaryId :{}",doctorDispensaryId);
+//        DoctorDispensary doctorDispensary= doctorDispensaryRepository.findById(Long.parseLong(doctorDispensaryId))
+//                .orElseThrow(()-> new ResourceNotFoundException("No matching doctor and dispensary found"));
+//        doctorScheduleGrid.setDoctorDispensary(doctorDispensary);
+//
+//        return new ResponseEntity(doctorScheduleGridRepository.save(doctorScheduleGrid), HttpStatus.CREATED);
+//    }
+
     @GetMapping(value = "/schedule/{doctorDispensaryId}")
     public ResponseEntity<List<DoctorScheduleGrid>> getSchedule(@PathVariable String doctorDispensaryId){
         List<DoctorScheduleGrid> doctorScheduleGrid = doctorScheduleGridRepository
@@ -58,12 +71,26 @@ public class DoctorScheduleGridController {
 
     private static List<DoctorScheduleGrid> addSchedule(List<DoctorScheduleGrid> old,
                                                         DoctorScheduleGrid value){
-        System.out.println("::::::::::::::::::::::::: "+old.size());
-        System.out.println(">>>>>>>>>>>>>>vv "+value);
         List<DoctorScheduleGrid>  newLis =new  ArrayList<>();
         old.forEach(o->newLis.add(o));
         newLis.add(value);
         return newLis;
+    }
+
+    @GetMapping(value = "/schedule/doctor/{doctorId}/dispensary/{dispensaryId}")
+    public List<DoctorDispensary> getDoctorDispensary(@PathVariable String doctorId,
+                                                      @PathVariable String dispensaryId
+    ){
+
+        log.info("GET - get doctorDispensary list doctorId:{}, dispensaryId",doctorId,dispensaryId);
+        log.info("dis Id :{}",dispensaryId!=null);
+
+        List<DoctorDispensary> doctorDispensary = doctorDispensaryRepository.
+                findAllByDoctorAndDispensary( doctorId !=null ?Long.parseLong(doctorId):null,
+                        dispensaryId !=null ?Long.parseLong(dispensaryId):null);
+
+        return doctorDispensary;
+
     }
 
 
@@ -81,16 +108,18 @@ public class DoctorScheduleGridController {
      *
      * loop incoming noOfDays and get each day and take session time and add to available session array
      */
-    @PostMapping(value = "/schedule/{doctorDispensaryId}/sessions")
-    public List<DoctorAppoinmentSession> getNextAvailableSessions(@PathVariable("doctorDispensaryId") String doctorDispensaryId,
-                                                                  @RequestBody DoctorScheduleRequest request
+    @GetMapping(value = "/schedule/doctor/{doctorId}/dispensary/{dispensaryId}/sessions")
+    public List<DoctorAppoinmentSession> getNextAvailableSessions(@PathVariable("doctorId") String doctorId,
+                                                                  @PathVariable("dispensaryId") String dispensaryId,
+                                                                  @RequestParam(required = true,defaultValue = "1") int displayDays
                                                            ){
+        log.info("POST: Getting next avaibale sessions");
         List<DoctorAppoinmentSession> doctorAppoinmentSessions =new ArrayList<>();
         LocalDateTime currentDateTime = LocalDateTime.now();
         Map<String,List<DoctorScheduleGrid>> doctorScheduleGridMap = new HashMap<>();
 
         List<DoctorScheduleGrid> doctorScheduleGridList = doctorScheduleGridRepository.
-                findByDoctorDispensaryId(Long.parseLong(doctorDispensaryId));
+                findByDoctorDispensaryId(Long.parseLong(doctorId),Long.parseLong(dispensaryId));
 
         doctorScheduleGridList.forEach(schedule->{
             doctorScheduleGridMap.putIfAbsent(schedule.getDayOfWeek(), Arrays.asList(schedule));
@@ -102,13 +131,13 @@ public class DoctorScheduleGridController {
         });
         int noOfDays=0;
         int incrementDateByOne =0;
-        while(noOfDays < 2 ){
+        while(noOfDays < displayDays ){
             if(incrementDateByOne >10){
                 break;
             }
             LocalDateTime searchDate = currentDateTime.plusDays(incrementDateByOne);
             List<DoctorScheduleGrid> currentDaySchedules= doctorScheduleGridRepository.
-                    findByDoctorDispensaryIdAndDayOfWeek(Long.parseLong(doctorDispensaryId),
+                    findByDoctorDispensaryIdAndDayOfWeek(doctorScheduleGridList.get(0).getDoctorDispensary().getId(),
                             searchDate.getDayOfWeek().toString());
             incrementDateByOne ++;
             currentDaySchedules.forEach(day->{
@@ -123,6 +152,7 @@ public class DoctorScheduleGridController {
                    // noOfDays = noOfDays + 1;
                     DoctorAppoinmentSession appoinmentSessionBean=
                             (DoctorAppoinmentSession) appContext.getBean("doctorSession");;
+                    appoinmentSessionBean.setSessionId(day.getId());
                     appoinmentSessionBean.setDate(LocalDate.now().toString());
                     appoinmentSessionBean.setDay(day.getDayOfWeek());
                     appoinmentSessionBean.setSessionStartTime(day.getSessionStart());

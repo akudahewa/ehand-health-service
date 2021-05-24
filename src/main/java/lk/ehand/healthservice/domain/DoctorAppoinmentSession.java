@@ -2,6 +2,7 @@ package lk.ehand.healthservice.domain;
 
 public class DoctorAppoinmentSession {
 
+    private Long sessionId;
     private String date;
     private String day;
     private String sessionStartTime;
@@ -14,6 +15,14 @@ public class DoctorAppoinmentSession {
         this.day = day;
         this.sessionStartTime = sessionStartTime;
         this.nextAppoinmentNo = nextAppoinmentNo;
+    }
+
+    public Long getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(Long sessionId) {
+        this.sessionId = sessionId;
     }
 
     public String getDate() {

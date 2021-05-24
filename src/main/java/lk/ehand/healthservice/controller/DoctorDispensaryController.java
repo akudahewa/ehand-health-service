@@ -14,6 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/api")
@@ -42,4 +46,22 @@ public class DoctorDispensaryController {
          return doctorDispensaryRepository.save(doctorDispensary);
 
     }
+
+    @GetMapping(value = "/channel")
+    public List<DoctorDispensary> getDoctorDispensary(@RequestParam(required = false) String doctorId,
+                                                @RequestParam(required = false) String dispensaryId
+                                                 ){
+
+       log.info("GET - get doctorDispensary list doctorId:{}, dispensaryId",doctorId,dispensaryId);
+       log.info("dis Id :{}",dispensaryId!=null);
+
+        List<DoctorDispensary> doctorDispensary = doctorDispensaryRepository.
+                findAllByDoctorAndDispensary( doctorId !=null ?Long.parseLong(doctorId):null,
+                        dispensaryId !=null ?Long.parseLong(dispensaryId):null);
+
+        return doctorDispensary;
+
+    }
+
+
 }
