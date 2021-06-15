@@ -6,11 +6,12 @@ spring:
     password: 6fb5bc92
     hikari:
       connection-timeout: 10000
-      minimum-idle: 20
+      minimum-idle: 5
       maximum-pool-size: 20
       idle-timeout: 30000
       max-lifetime: 30000
       pool-name: health
+      max-a
     jpa:
       properties:
         hibernate:
