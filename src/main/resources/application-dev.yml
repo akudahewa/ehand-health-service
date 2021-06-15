@@ -5,11 +5,11 @@ spring:
     username: ba7e914b577469
     password: 6fb5bc92
     hikari:
-      connection-timeout: 3000
+      connection-timeout: 10000
       minimum-idle: 20
       maximum-pool-size: 20
-      idle-timeout: 10000
-      max-lifetime: 10000
+      idle-timeout: 30000
+      max-lifetime: 30000
       pool-name: health
     jpa:
       properties:
