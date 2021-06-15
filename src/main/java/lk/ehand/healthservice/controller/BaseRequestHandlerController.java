@@ -21,6 +21,7 @@ public class BaseRequestHandlerController {
     BaseRequestHandlerController(DoctorServiceImpl doctorService){
         this.doctorService =doctorService;
     }
+
     @GetMapping(value = "/search/{cityId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<DoctorDispensary> getMainSearchData(@PathVariable("cityId") String cityId){
         return doctorService.getDoctorByCity(Long.parseLong(cityId));

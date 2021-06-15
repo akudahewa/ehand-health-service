@@ -2,15 +2,13 @@ package lk.ehand.healthservice.controller;
 
 import lk.ehand.healthservice.domain.District;
 import lk.ehand.healthservice.exception.InternalServerException;
-import lk.ehand.healthservice.exception.ResourceNotFoundException;
 import lk.ehand.healthservice.repository.IDistrictRepository;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -18,26 +16,42 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/api")
 @Slf4j
+@RequiredArgsConstructor
 public class DistrictController {
 
-    private IDistrictRepository districtRepository;
+    private final IDistrictRepository districtRepository;
 
-    DistrictController(IDistrictRepository districtRepository){
-        this.districtRepository =districtRepository;
-    }
-
-    @PostMapping(value = "/district", produces = MediaType.APPLICATION_JSON_VALUE)
+    /**
+     *  create distrcit in persistence layer
+     * @param district
+     * @return created district object
+     */
+    @PostMapping(value = "/district", produces = MediaType.APPLICATION_JSON_VALUE
+            ,consumes = MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity<District> saveDistrict(@RequestBody @Valid District district ){
-        log.info("POST -> Create District :{}",district);
+        log.info("POST -> create district ");
+
         return new ResponseEntity<>(districtRepository.save(district), HttpStatus.CREATED);
     }
 
+    /**
+     * get all districts in sri lanka, it hard-coded country
+     * @return list of district object
+     * no parameter required
+     */
     @GetMapping(value = "/district",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<District>> getDistricts(){
         log.info("GET -> Get Districts ");
+
         return ResponseEntity.ok().body(districtRepository.findAll());
     }
 
+    /**
+     * update district object for given id
+     * @param id
+     * @param district
+     * @return updtaed district object
+     */
     @PutMapping(value = "/district/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public District updateDistrict(@PathVariable String id,@RequestBody District district){
         log.info("PUT -> Update District {}",district);
@@ -47,6 +61,11 @@ public class DistrictController {
         }).orElseThrow(()->new InternalServerException("Could not update the district"));
     }
 
+    /**
+     * delete district
+     * @param id
+     * @return success message for delete object
+     */
     @DeleteMapping(value = "district/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getDistricts(@PathVariable String id){
         log.info("DELETE -> Delete district -id:{}",id);

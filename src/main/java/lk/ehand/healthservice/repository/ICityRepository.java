@@ -13,9 +13,7 @@ import java.util.List;
 @Repository
 public interface ICityRepository extends JpaRepository<City,Long> {
 
-//    public List<City> findCitiesByDistrictId(long id);
-
-    public List<City> findCitiesByDistrictId(Long id);
+    List<City> findCitiesByDistrictId(Long id);
 
     @Modifying
     @Query(value = "insert into city_doctors (CITY_ID,DOCTOR_ID) VALUES (:cityId,:doctorId)", nativeQuery = true)

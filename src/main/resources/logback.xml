@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOG_DIR" value="/home/amila/logs/health-service"/>
+    <property name="LOG_DIR" value="~/logs/health-service"/>
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
@@ -42,6 +42,12 @@
     <logger name="org.apache" level="error">
         <appender-ref ref="SPRING_LOG_APPENDER"/>
     </logger>
+    <logger name="com.zaxxer.hikari.HikariConfig" level="debug">
+        <appender-ref ref="SPRING_LOG_APPENDER"/>
+    </logger>
+    <logger name="com.zaxxer.hikari" level="debug">
+        <appender-ref ref="SPRING_LOG_APPENDER"/>
+    </logger>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
@@ -49,7 +55,7 @@
     <root level="ERROR">
         <appender-ref ref="CONSOLE" />
     </root>
-    <!--    <root level="DEBUG">-->
-    <!--        <appender-ref ref="CONSOLE" />-->
-    <!--    </root>-->
+<!--        <root level="DEBUG">-->
+<!--            <appender-ref ref="CONSOLE" />-->
+<!--        </root>-->
 </configuration>

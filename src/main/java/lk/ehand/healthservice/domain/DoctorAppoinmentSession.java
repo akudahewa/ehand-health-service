@@ -2,27 +2,50 @@ package lk.ehand.healthservice.domain;
 
 public class DoctorAppoinmentSession {
 
-    private Long sessionId;
+    private Long id;
     private String date;
     private String day;
     private String sessionStartTime;
+    private String sessionEndTime;
     private int nextAppoinmentNo;
+    private int maxCount;
+    private String status;
 
     public DoctorAppoinmentSession(){}
 
-    public DoctorAppoinmentSession(String date, String day, String sessionStartTime, int nextAppoinmentNo) {
+    public DoctorAppoinmentSession(String date, String day, String sessionStartTime,
+                                   int nextAppoinmentNo,String status,int maxCount
+            ) {
         this.date = date;
         this.day = day;
         this.sessionStartTime = sessionStartTime;
         this.nextAppoinmentNo = nextAppoinmentNo;
+        this.status =status;
+        this.maxCount = maxCount;
     }
 
-    public Long getSessionId() {
-        return sessionId;
+    public int getMaxCount() {
+        return maxCount;
     }
 
-    public void setSessionId(Long sessionId) {
-        this.sessionId = sessionId;
+    public void setMaxCount(int maxCount) {
+        this.maxCount = maxCount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSessionEndTime() {
+        return sessionEndTime;
+    }
+
+    public void setSessionEndTime(String sessionEndTime) {
+        this.sessionEndTime = sessionEndTime;
     }
 
     public String getDate() {
@@ -55,5 +78,13 @@ public class DoctorAppoinmentSession {
 
     public void setNextAppoinmentNo(int nextAppoinmentNo) {
         this.nextAppoinmentNo = nextAppoinmentNo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

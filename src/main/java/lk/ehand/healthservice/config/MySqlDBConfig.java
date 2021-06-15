@@ -1,5 +1,6 @@
 package lk.ehand.healthservice.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -18,35 +19,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableTransactionManagement
-@EnableJpaRepositories(entityManagerFactoryRef = "mySqlEntityManagerFactory",
-        transactionManagerRef = "mySqlTransactionManager",
-        basePackages = {
-                "lk.ehand.healthservice.repository"})
+//@EnableTransactionManagement
+//@EnableJpaRepositories(entityManagerFactoryRef = "mySqlEntityManagerFactory",
+//        transactionManagerRef = "mySqlTransactionManager",
+//        basePackages = {
+//                "lk.ehand.healthservice.repository"})
 
 public class MySqlDBConfig {
 
-    @Bean(name = "mysqlDataSource")
-    @ConfigurationProperties(prefix = "mysql.datasource")
-    public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
-    }
 
-    @Bean(name = "mySqlEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean mySqlEntityManagerFactory(EntityManagerFactoryBuilder builder,
-                                                                            @Qualifier("mysqlDataSource") DataSource dataSource) {
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "update");
-        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-        properties.put("implicit-strategy", "org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl");
-        properties.put("physical-strategy", "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl");
-        return builder.dataSource(dataSource).properties(properties)
-                .packages("lk.ehand.healthservice.domain").build();
-    }
 
-    @Bean(name = "mySqlTransactionManager")
-    public PlatformTransactionManager TransactionManager(
-            @Qualifier("mySqlEntityManagerFactory") EntityManagerFactory mysqlEntityManagerFactory) {
-        return new JpaTransactionManager(mysqlEntityManagerFactory);
-    }
+//        @Bean(name = "mysqlDataSource")
+//    public DataSource dataSource() {
+//            System.out.println("datasource ======================"+dataSource);
+//        return dataSource;
+//    }
+
+//    @Bean(name = "mysqlDataSource")
+//    @ConfigurationProperties(prefix = "spring.datasource")
+//    public DataSource dataSource() {
+//        DataSource dataSource = DataSourceBuilder.create().build();
+//        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< "+dataSource);
+//        System.out.println(dataSource);
+//        return dataSource;
+//    }
+
+//    @Bean(name = "mySqlEntityManagerFactory")
+//    public LocalContainerEntityManagerFactoryBean mySqlEntityManagerFactory(EntityManagerFactoryBuilder builder,
+//                                                                            @Qualifier("mysqlDataSource") DataSource dataSource) {
+//        Map<String, Object> properties = new HashMap<>();
+//        properties.put("hibernate.hbm2ddl.auto", "update");
+//        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+//        properties.put("implicit-strategy", "org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl");
+//        properties.put("physical-strategy", "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl");
+//        return builder.dataSource(dataSource).properties(properties)
+//                .packages("lk.ehand.healthservice.domain").build();
+//    }
+
+//    @Bean(name = "mySqlTransactionManager")
+//    public PlatformTransactionManager TransactionManager(
+//            @Qualifier("mySqlEntityManagerFactory") EntityManagerFactory mysqlEntityManagerFactory) {
+//        return new JpaTransactionManager(mysqlEntityManagerFactory);
+//    }
 }

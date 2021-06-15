@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,15 +39,29 @@ public class CityController {
         this.dispensaryRepository = dispensaryRepository;
     }
 
+    /**
+     * return all cities for given districtId
+     * @param districtId
+     * @return list of cities
+     */
     @GetMapping(value = "/district/{id}/city")
     public ResponseEntity<List<City>> getCities(@PathVariable String id){
-        List<City> city = cityRepository.findCitiesByDistrictId(Long.parseLong(id));
-        return ResponseEntity.ok().body(city);
+        log.info("GET - Get all cities for districtId :{}",id);
+
+        return ResponseEntity.ok().
+                body(cityRepository.findCitiesByDistrictId(Long.parseLong(id)));
     }
 
-    @PostMapping(value = "/district/{id}/city")
+    /**
+     * save city for given city
+     * @param city
+     * @param districtId
+     * @return saved city object
+     */
+    @PostMapping(value = "/district/{id}/city",consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
     public City saveCity(@RequestBody City city, @PathVariable("id") String districtId) {
-        log.info("POST - save city :{}", city);
+        log.info("POST - create city ");
         return districtRepository.findById(Long.parseLong(districtId)).map(district -> {
             city.setDistrict(district);
             return cityRepository.save(city);

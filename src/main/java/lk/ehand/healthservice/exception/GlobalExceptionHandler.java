@@ -32,6 +32,38 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(err, err.getStatus());
     }
 
+    @ExceptionHandler(InternalServerException.class)
+    public ResponseEntity<ApiException> handleEInternalServerException(InternalServerException ex) {
+        System.out.println("--------------EInternalServerException  -------------------"+ex.getMessage());
+        ex.printStackTrace();
+        System.out.println("............................................................");
+        List<String> details = new ArrayList<String>();
+        details.add(ex.getMessage());
+
+        ApiException err = new ApiException(
+                LocalDateTime.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "Internal server error" ,
+                details);
+        return new ResponseEntity<>(err, err.getStatus());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiException> handleException(Exception ex) {
+        System.out.println("  ################ Exception occur #####################"+ex.getMessage());
+        ex.printStackTrace();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        List<String> details = new ArrayList<String>();
+        details.add(ex.getMessage());
+
+        ApiException err = new ApiException(
+                LocalDateTime.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "Internal server error" ,
+                details);
+        return new ResponseEntity<>(err, err.getStatus());
+    }
+
 
     @Override
     @ResponseBody

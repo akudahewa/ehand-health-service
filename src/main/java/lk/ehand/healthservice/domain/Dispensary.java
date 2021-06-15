@@ -19,6 +19,9 @@ public class Dispensary {
     @Column(name = "name")
     private String name;
 
+    @Column(name="address")
+    private String address;
+
     @ManyToOne
     @JoinColumn(name = "city_id",referencedColumnName = "city_id")
     private City city;
@@ -57,6 +60,14 @@ public class Dispensary {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public List<DoctorDispensary> getDoctorDispensaries() {

@@ -31,17 +31,28 @@ public class DoctorScheduleGrid {
     private String sessionStart;
     private String sessionEnd;
     private String status;
+    private int maxCount;
 
     public DoctorScheduleGrid(){}
 
     public DoctorScheduleGrid(DoctorDispensary doctorDispensary, List<DoctorScheduleGridAlteration> doctorScheduleGridAlterationList, String dayOfWeek,
-                              String sessionStart, String sessionEnd, String status) {
+                              String sessionStart, String sessionEnd, String status,int maxCount) {
         this.doctorDispensary = doctorDispensary;
         this.doctorScheduleGridAlterationList = doctorScheduleGridAlterationList;
         this.dayOfWeek = dayOfWeek;
         this.sessionStart = sessionStart;
         this.sessionEnd = sessionEnd;
         this.status = status;
+        this.maxCount = maxCount;
+
+    }
+
+    public int getMaxCount() {
+        return maxCount;
+    }
+
+    public void setMaxCount(int maxCount) {
+        this.maxCount = maxCount;
     }
 
     public long getId() {

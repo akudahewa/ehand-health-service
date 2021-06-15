@@ -1,5 +1,7 @@
 package lk.ehand.healthservice.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,16 +14,21 @@ public class DoctorScheduleGridAlteration {
 
     @ManyToOne
     @JoinColumn(name = "doctor_schedule_grid_id",referencedColumnName = "id")
-    DoctorScheduleGrid doctorScheduleGrid;
+    private DoctorScheduleGrid doctorScheduleGrid;
 
-    String date;
-    String status;
+    private String date;
+    private String sessionStartTime;
+    private String status;
+    private int maxCount;
 
     public DoctorScheduleGridAlteration(){}
 
-    public DoctorScheduleGridAlteration(DoctorScheduleGrid doctorScheduleGrid, String date, String status) {
+    public DoctorScheduleGridAlteration(DoctorScheduleGrid doctorScheduleGrid, String date,String sessionStartTime,
+                                        String status,int maxCount) {
         this.doctorScheduleGrid = doctorScheduleGrid;
         this.date = date;
+        this.sessionStartTime = sessionStartTime;
+        this.maxCount = maxCount;
         this.status = status;
     }
 
@@ -47,5 +54,29 @@ public class DoctorScheduleGridAlteration {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getSessionStartTime() {
+        return sessionStartTime;
+    }
+
+    public void setSessionStartTime(String sessionStartTime) {
+        this.sessionStartTime = sessionStartTime;
+    }
+
+    public int getMaxCount() {
+        return maxCount;
+    }
+
+    public void setMaxCount(int maxCount) {
+        this.maxCount = maxCount;
     }
 }

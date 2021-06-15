@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: jump
+    active: dev
   application:
     name: login
     prefix: login
@@ -14,7 +14,7 @@ spring:
   mail:
     host: smtp.gmail.com
     username: akudahewa@gmail.com
-    password: ucscank!2384
+    password: 123456
     port: 587
     properties:
       mail:

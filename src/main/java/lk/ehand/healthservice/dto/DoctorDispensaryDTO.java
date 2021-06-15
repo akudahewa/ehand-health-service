@@ -7,24 +7,30 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class DoctorDispensaryDTO implements Serializable {
 
-    private String doctorId;
-    private String dispensaryId;
+    private String doctor;
+    private String dispensary;
     private String status;
 
-    public String getDoctorId() {
-        return doctorId;
+    public DoctorDispensaryDTO(String doctor, String dispensary, String status) {
+        this.doctor = doctor;
+        this.dispensary = dispensary;
+        this.status = status;
     }
 
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+    public String getDoctor() {
+        return doctor;
     }
 
-    public String getDispensaryId() {
-        return dispensaryId;
+    public void setDoctor(String doctor) {
+        this.doctor = doctor;
     }
 
-    public void setDispensaryId(String dispensaryId) {
-        this.dispensaryId = dispensaryId;
+    public String getDispensary() {
+        return dispensary;
+    }
+
+    public void setDispensary(String dispensary) {
+        this.dispensary = dispensary;
     }
 
     public String getStatus() {
@@ -32,12 +38,6 @@ public class DoctorDispensaryDTO implements Serializable {
     }
 
     public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public DoctorDispensaryDTO(String doctorId, String dispensaryId, String status) {
-        this.doctorId = doctorId;
-        this.dispensaryId = dispensaryId;
         this.status = status;
     }
 }

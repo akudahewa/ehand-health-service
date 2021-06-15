@@ -1,16 +1,25 @@
-mysql:
+spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3306/health?useSSL=false
+    url: jdbc:mysql://localhost:3306/health?useSSL=false
     username: root
     password: welcome
-
-#  jpa:
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-#    hibernate:
-#      ddl-auto: update
+    hikari:
+      connection-timeout: 3000
+      minimum-idle: 20
+      maximum-pool-size: 20
+      idle-timeout: 10000
+      max-lifetime: 10000
+      pool-name: health
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        hbm2ddl:
+          auto: update
+        naming:
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 
 

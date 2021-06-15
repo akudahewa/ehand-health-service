@@ -11,7 +11,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.Charset;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -34,7 +38,19 @@ public class TransactionController {
     public ResponseEntity<Transaction> initTransaction(@PathVariable String doctorSeheduleGridId, @RequestBody Transaction transaction){
         Optional<DoctorScheduleGrid> doctorScheduleGrid= doctorScheduleGridRepository.findById(Long.parseLong(doctorSeheduleGridId));
         transaction.setDoctorScheduleGrid(doctorScheduleGrid.get());
-        transaction.setRefNumber("SSDFFG");
+        System.out.println(LocalDateTime.now().toString());
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "abcdefghijklmnopqrstuvxyz"
+                + transaction.getMobileNo();
+        StringBuilder sb = new StringBuilder(12);
+        for (int i = 0; i < 12; i++) {
+            int index
+                    = (int)(AlphaNumericString.length()
+                    * Math.random());
+            sb.append(AlphaNumericString
+                    .charAt(index));
+        }
+        transaction.setRefNumber(sb.toString());
 
         return new ResponseEntity(transactionRepository.save(transaction),HttpStatus.CREATED);
     }
