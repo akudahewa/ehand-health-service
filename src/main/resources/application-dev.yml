@@ -4,13 +4,13 @@ spring:
     url: jdbc:mysql://us-cdbr-east-04.cleardb.com:3306/heroku_2a5430966aafdc3?useSSL=false
     username: ba7e914b577469
     password: 6fb5bc92
-    hikari:
-      connection-timeout: 20000
-      minimum-idle: 20
-      maximum-pool-size: 20
-      idle-timeout: 10000
-      max-lifetime: 10000
-      pool-name: health
+#    hikari:
+#      connection-timeout: 10000
+#      minimum-idle: 20
+#      maximum-pool-size: 20
+#      idle-timeout: 10000
+#      max-lifetime: 10000
+#      pool-name: health
     jpa:
       properties:
         hibernate:
