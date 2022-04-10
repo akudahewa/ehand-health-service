@@ -30,6 +30,10 @@ public class Dispensary {
     @OneToMany(mappedBy = "dispensary", cascade = CascadeType.ALL)
     private List<DoctorDispensary> doctorDispensaries;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "dispensary", cascade = CascadeType.ALL)
+    private List<DispensaryUser> dispensaryUsers;
+
     public Dispensary(){}
 
     public Dispensary(String name, City city, List<DoctorDispensary> doctorDispensaries) {
@@ -76,5 +80,13 @@ public class Dispensary {
 
     public void setDoctorDispensaries(List<DoctorDispensary> doctorDispensaries) {
         this.doctorDispensaries = doctorDispensaries;
+    }
+
+    public List<DispensaryUser> getDispensaryUsers() {
+        return dispensaryUsers;
+    }
+
+    public void setDispensaryUsers(List<DispensaryUser> dispensaryUsers) {
+        this.dispensaryUsers = dispensaryUsers;
     }
 }

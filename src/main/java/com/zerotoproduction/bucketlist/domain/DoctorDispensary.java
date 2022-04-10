@@ -1,6 +1,7 @@
 package com.zerotoproduction.bucketlist.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,13 +11,13 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@JsonIgnoreProperties
 @Table(name = "doctor_dispensary")
-public class DoctorDispensary implements Serializable {
+public class DoctorDispensary{
 
     @Id
-    @Column(name = "doctor_dispensary_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "doctor_dispensary_id")
     private Long id;
 
     @ManyToOne

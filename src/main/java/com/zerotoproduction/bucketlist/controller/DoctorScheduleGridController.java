@@ -116,23 +116,24 @@ public class DoctorScheduleGridController {
                 });
                 appointmentTimeProcessor.setAbsentList(absentList);
                 appointmentTimeProcessor.setAmendList((amendList));
-                appointmentTimeProcessorList.add(appointmentTimeProcessor);
-                System.out.println("getDoctorScheduleGridAlterationList >0  :"+appointmentTimeProcessor.getDoctorScheduleGridId());
+                //appointmentTimeProcessorList.add(appointmentTimeProcessor);
+                //System.out.println("getDoctorScheduleGridAlterationList >0  :"+appointmentTimeProcessor.getDoctorScheduleGridId());
 //                resultMap.computeIfPresent(key,
 //                        (k, v) -> addAlteration1(v, appointmentTimeProcessorList));
-                System.out.println("getDoctorScheduleGridAlterationList >0  - computeIfPresent "+appointmentTimeProcessorList.size());
-                resultMap.putIfAbsent(key, appointmentTimeProcessorList);
+                //System.out.println("getDoctorScheduleGridAlterationList >0  - computeIfPresent "+appointmentTimeProcessorList.size());
+               // resultMap.putIfAbsent(key, appointmentTimeProcessorList);
 
-                System.out.println("getDoctorScheduleGridAlterationList >0 - size- putIfAbsent "+appointmentTimeProcessorList.size());
+               // System.out.println("getDoctorScheduleGridAlterationList >0 - size- putIfAbsent "+appointmentTimeProcessorList.size());
 
 
-            }else{
+            }
+           // else{
                 System.out.println("getDoctorScheduleGridAlterationList ==0 "+appointmentTimeProcessor.getDoctorScheduleGridId()+
                         " --- day ---"+appointmentTimeProcessor.getDayOfWeek());
                 appointmentTimeProcessorList.add(appointmentTimeProcessor);
                 resultMap.putIfAbsent(key, appointmentTimeProcessorList);
                 System.out.println("getDoctorScheduleGridAlterationList ==0 size  "+appointmentTimeProcessorList.size());
-            }
+            //}///
 
         });
         IntStream.range(0, displayDays).forEach(i -> {
@@ -156,10 +157,10 @@ public class DoctorScheduleGridController {
                     doctorScheduleGridAlteration =
                             doctorAmand.stream().filter(amand->amand.getDate().equals(String.valueOf(currentdate.plusDays(i)))).findFirst().get();
                 }
-
+                DoctorAppoinmentSession appoinmentSessionBean=
+                        (DoctorAppoinmentSession) appContext.getBean("doctorSession");
                 if( doctorAbsent!=null){
-                    DoctorAppoinmentSession appoinmentSessionBean=
-                            (DoctorAppoinmentSession) appContext.getBean("doctorSession");
+                    appoinmentSessionBean.setId(appoinmentSchedule.get(0).getDoctorScheduleGridId());
                     appoinmentSessionBean.setSessionStartTime(appoinmentSchedule.get(0).getSessionStart());
                     appoinmentSessionBean.setSessionEndTime(appoinmentSchedule.get(0).getSessionEnd());
                     appoinmentSessionBean.setDay(appoinmentSchedule.get(0).getDayOfWeek());
@@ -171,8 +172,7 @@ public class DoctorScheduleGridController {
                 }
                 if(doctorAmand!=null)
                 {
-                    DoctorAppoinmentSession appoinmentSessionBean=
-                            (DoctorAppoinmentSession) appContext.getBean("doctorSession");
+                    appoinmentSessionBean.setId(appoinmentSchedule.get(0).getDoctorScheduleGridId());
                     appoinmentSessionBean.setSessionStartTime(doctorScheduleGridAlteration.getSessionStartTime());
                     appoinmentSessionBean.setSessionEndTime(appoinmentSchedule.get(0).getSessionEnd());
                     appoinmentSessionBean.setDate(String.valueOf(currentdate.plusDays(i)));
@@ -180,9 +180,7 @@ public class DoctorScheduleGridController {
                     appoinmentSessionBean.setMaxCount(doctorScheduleGridAlteration.getMaxCount());
                     doctorAppoinmentSessionList.add(appoinmentSessionBean);
                 }else{
-
-                    DoctorAppoinmentSession appoinmentSessionBean=
-                            (DoctorAppoinmentSession) appContext.getBean("doctorSession");
+                    appoinmentSessionBean.setId(appoinmentSchedule.get(0).getDoctorScheduleGridId());
                     appoinmentSessionBean.setSessionStartTime(appoinmentSchedule.get(0).getSessionStart());
                     appoinmentSessionBean.setSessionEndTime(appoinmentSchedule.get(0).getSessionEnd());
                     appoinmentSessionBean.setDay(appoinmentSchedule.get(0).getDayOfWeek());
