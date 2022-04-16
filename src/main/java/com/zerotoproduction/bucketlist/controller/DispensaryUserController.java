@@ -52,7 +52,7 @@ public class DispensaryUserController {
     @GetMapping(value = "/dispensary-users")
     public ResponseEntity<DispensaryUser> getDispensary(@RequestParam(required = false) String userId
     ){
-        System.out.println("........................id................."+userId);
+        System.out.println(".userId ...."+userId);
         log.info("GET - DispensaryUser dispensaryId :{}",userId);
         DispensaryUser dispensaryUser = dispensaryUserRepository.findByUserId(userId);
         return ResponseEntity.ok().body(dispensaryUser);
