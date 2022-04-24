@@ -42,7 +42,7 @@ public class DistrictController {
     @GetMapping(value = "/district",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<District>> getDistricts(){
         log.info("GET -> Get Districts ");
-
+        System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddddddd");
         return ResponseEntity.ok().body(districtRepository.findAll());
     }
 
